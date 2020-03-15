@@ -14,8 +14,6 @@ class ContactViewPage extends React.Component {
         super(props);
 
         this.contact = props.route.params.contact;
-
-        console.log(this.contact );
     }
 
     render(){
@@ -24,17 +22,17 @@ class ContactViewPage extends React.Component {
                 <ScrollView style={style.detailScroll}>
                 <Image style={style.image} source={{uri: this.contact.avatar.large}}/>
 
-                    <ContactInfoLine label='Name: ' value={this.contact.name} style={style.line}/>
+                    <ContactInfoLine label='Name' value={this.contact.name} style={style.line}/>
 
-                    <ContactInfoLine label='Email: ' value={this.contact.email} style={style.line}/>
+                    <ContactInfoLine label='Email' value={this.contact.email} style={style.line}/>
 
-                    <ContactInfoLine label='Phone: ' value={this.contact.phone} style={style.line}/>
+                    <ContactInfoLine label='Phone' value={this.contact.phone} style={style.line}/>
 
-                    <ContactInfoLine label='City: ' value={this.contact.location.city} style={style.line}/>
+                    <ContactInfoLine label='City' value={this.contact.location.city} style={style.line}/>
 
-                    <ContactInfoLine label='State: ' value={this.contact.location.state} style={style.line}/>
+                    <ContactInfoLine label='State' value={this.contact.location.state} style={style.line}/>
 
-                    <ContactInfoLine label='Nationality: ' value={this.contact.nat} style={style.line}/>
+                    <ContactInfoLine label='Nationality' value={this.contact.nat} style={style.line}/>
 
                 </ScrollView >
             </View>
