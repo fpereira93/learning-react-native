@@ -11,6 +11,7 @@ import FormPicker from '../components/FormPicker';
 import FormSlider from '../components/FormSlider';
 import FormButton from '../components/FormButton';
 import Loading from '../components/Loading';
+import FormNotInline from '../components/FormNotInline';
 
 class SerieFormPage extends React.Component {
 
@@ -26,8 +27,8 @@ class SerieFormPage extends React.Component {
         ]
 
         this.state = {
-            rate: 0,
             loading: false,
+            message: ''
         }
 
         this.onChangeDebounced = _.debounce(this.changeRate, 1000)
@@ -79,7 +80,33 @@ class SerieFormPage extends React.Component {
         )
     }
 
+    isValidFields(){
+        const { serieForm } = this.props;
+
+        const isValid = (
+            serieForm.title.trim() != "" &&
+            serieForm.img.trim() != "" &&
+            serieForm.gender != null &&
+            serieForm.description.trim() != ""
+        )
+
+        return isValid;
+    }
+
+    setRequiredFields(){
+        this.setState({ ...this.state, message: 'Todos os campos são obrigatórios' })
+
+        setTimeout(() => {
+            this.setState({ ...this.state, message: '' })
+        }, 2000)
+    }
+
     onSave(){
+        if (!this.isValidFields()){
+            this.setRequiredFields();
+            return;
+        }
+
         this.setState({ ...this.state, loading: true })
 
         const { serieForm } = this.props;
@@ -147,6 +174,8 @@ class SerieFormPage extends React.Component {
                         onChange={this.changeDescription.bind(this)}
                         placeholder="Descrição" />
                 </FormRow>
+
+                <FormNotInline type='warning' message={this.state.message} />
 
                 <FormRow style={{ marginTop: 15, marginBottom: 10 }}>
                     <FormButton title="Salvar" onPress={this.onSave.bind(this)}/>

@@ -33,7 +33,7 @@ class LoginPage extends React.Component {
     }
 
     hideMessage(){
-        setTimeout(() => this.setState({ msgTryLogin: '' }), 3000)
+        setTimeout(() => this.setState({ msgTryLogin: '' }), 2000)
     }
 
     validateInputs(){
