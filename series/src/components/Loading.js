@@ -7,7 +7,7 @@ class Loading extends React.Component {
     render(){
         return ( this.props.show
             ?
-                <View style={style.container}>
+                <View style={[style.container, !this.props.noBackdrop ? style.backdrop : null ]}>
                     <ActivityIndicator size="large" />
                     { this.props.message ? <Text style={style.text}>{ this.props.message }</Text> : null }
                 </View>
@@ -26,13 +26,15 @@ const style = StyleSheet.create({
         bottom: 0,
         right: 0,
         zIndex: 1,
-        backgroundColor: colors.backdrop,
         justifyContent: 'center',
     },
     text: {
         color: 'white',
         textAlign: 'center',
         marginTop: 10
+    },
+    backdrop: {
+        backgroundColor: colors.backdrop,
     }
 })
 

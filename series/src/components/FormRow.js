@@ -5,7 +5,7 @@ class FormRow extends React.Component {
 
     render(){
         return (
-            <View style={style.container}>
+            <View style={[style.container, this.props.style]}>
                 { this.props.children }
             </View>
         )

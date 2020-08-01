@@ -1,12 +1,15 @@
 import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, Alert } from 'react-native';
 import FormInput from '../components/FormInput';
 import FormRow from '../components/FormRow';
 import FormButton from '../components/FormButton';
 import FormNotInline from '../components/FormNotInline';
 import Loading from '../components/Loading';
-import firebase from '../services/firebase';
 import BaseNotLoggedPage from '../pages/BaseNotLoggedPage';
+import services from '../services/firebase';
+import { connect } from 'react-redux';
+
+import { tryLogin } from '../actions';
 
 class LoginPage extends React.Component {
 
@@ -47,6 +50,26 @@ class LoginPage extends React.Component {
         return true;
     }
 
+    alertUserNotFound() {
+        Alert.alert(
+            'Usuário não encontrado',
+            'Deseja criar um usuário para você?',
+            [
+                {
+                    text: 'Não',
+                    style: 'cancel',
+                },
+                {
+                    text: 'Sim',
+                    onPress: () => this.props.navigation.navigate('register', { email: this.state.email }),
+                }
+            ],
+            {
+                cancelable: false
+            }
+        )
+    }
+
     tryLoggin(){
         if (!this.validateInputs()){
             return;
@@ -56,32 +79,23 @@ class LoginPage extends React.Component {
 
         const {email, password} = this.state;
 
-        try {
-            firebase
-            .auth(email, password)
-            .then(user => {
-                this.setState({ loading: false })
+        this.props.tryLogin({email, password}).then((user) => {
+            this.props.navigation.replace('series-list')
+        }).catch((error) => {
 
-                console.log(user);
-
-                alert('Login success')
-            })
-            .catch(error => {
+            if (error.code === 'auth/user-not-found'){
+                this.alertUserNotFound()
+            } else {
                 this.setState({
                     loading: false,
-                    msgTryLogin: firebase.authErrorMessage(error.code),
+                    msgTryLogin: services.authErrorMessage(error.code),
                 })
-
+    
                 this.hideMessage()
-            })
-        } catch (error) {
-            this.setState({
-                loading: false,
-                msgTryLogin: 'Erro ao executar serviço, tente novamente'
-            })
-
-            this.hideMessage()
-        }
+            }
+        }).finally(() => {
+            this.setState({ loading: false })
+        })
     }
 
     toRegister(){
@@ -95,10 +109,10 @@ class LoginPage extends React.Component {
 
                 <View style={style.inputsContainer}>
                     <FormRow>
-                        <FormInput onChange={this.changeEmail.bind(this)} placeholder="email" />
+                        <FormInput onChange={this.changeEmail.bind(this)} isEmail placeholder="email" />
                     </FormRow>
                     <FormRow>
-                        <FormInput onChange={this.changePassword.bind(this)} password placeholder="senha" />
+                        <FormInput onChange={this.changePassword.bind(this)} isPassword placeholder="senha" />
                     </FormRow>
                     <FormRow>
                         <FormButton title='ENTRAR' onPress={this.tryLoggin.bind(this)}/>
@@ -125,4 +139,4 @@ const style = StyleSheet.create({
     }
 })
 
-export default LoginPage;
+export default connect(null, { tryLogin })(LoginPage);

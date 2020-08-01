@@ -8,13 +8,13 @@ import Loading from '../components/Loading';
 import firebase from '../services/firebase';
 import BaseNotLoggedPage from '../pages/BaseNotLoggedPage';
 
-class LoginPage extends React.Component {
+class RegisterPage extends React.Component {
 
     constructor(props){
         super(props)
 
         this.state = {
-            email: '',
+            email: props.route.params ? props.route.params.email : '',
             password: '',
             confirmPassword: '',
             msgTryRegister: '',
@@ -129,13 +129,13 @@ class LoginPage extends React.Component {
 
                 <View style={style.inputsContainer}>
                     <FormRow>
-                        <FormInput onChange={this.changeEmail.bind(this)} placeholder="email" />
+                        <FormInput value={this.state.email} onChange={this.changeEmail.bind(this)} isEmail placeholder="email" />
                     </FormRow>
                     <FormRow>
-                        <FormInput onChange={this.changePassword.bind(this)} password placeholder="senha" />
+                        <FormInput onChange={this.changePassword.bind(this)} isPassword placeholder="senha" />
                     </FormRow>
                     <FormRow>
-                        <FormInput onChange={this.changeConfirmPassword.bind(this)} password placeholder="confirmar senha" />
+                        <FormInput onChange={this.changeConfirmPassword.bind(this)} isPassword placeholder="confirmar senha" />
                     </FormRow>
                     <FormRow>
                         <FormButton title='CADASTRAR' onPress={this.tryRegister.bind(this)}/>
@@ -162,4 +162,4 @@ const style = StyleSheet.create({
     }
 })
 
-export default LoginPage;
+export default RegisterPage;

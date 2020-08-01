@@ -9,7 +9,6 @@ class FormInput extends React.Component {
 
         this.state = {
             focused: false,
-            value: props.value
         }
     }
 
@@ -23,21 +22,27 @@ class FormInput extends React.Component {
 
     onChangeText(text){
         this.props.onChange && this.props.onChange(text)
+        this.setState({ value: text })
     }
 
     render(){
         return (
             <View style={[style.container, this.state.focused ? style.focused : null]}>
                 <TextInput
+                    value={this.props.value}
                     onChangeText={text => this.onChangeText(text)}
                     autoCompleteType="off"
                     placeholder={!this.state.focused ? this.props.placeholder : null}
                     onFocus={() => this.onFocus.bind(this)}
                     onBlur={() => this.onBlur.bind(this)}
-                    secureTextEntry={this.props.password}
+                    secureTextEntry={this.props.isPassword}
                     style={style.input}
                     placeholderTextColor='rgba(255,255,255, 0.5)'
                     selectionColor={'white'}
+                    numberOfLines={this.props.numberLines}
+                    multiline={this.props.multiline}
+                    maxLength={this.props.maxLength}
+                    keyboardType={this.props.isEmail ? 'email-address' : 'default'}
                 />
             </View>
         )

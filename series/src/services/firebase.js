@@ -46,6 +46,18 @@ const services = {
     signOut: () => {
         return firebase.auth().signOut();
     },
+
+    currentUser: () => {
+        return firebase.auth().currentUser;
+    },
+
+    seriesDb: (serieId = null) => {
+        const user = services.currentUser();
+
+        const path = serieId ? `users/${user.uid}/series/${serieId}` : `users/${user.uid}/series`;
+
+        return firebase.database().ref(path);
+    }
 }
 
 export default services;

@@ -28,14 +28,10 @@ const style = StyleSheet.create({
     imageContainer: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center',
-        position: 'relative',
-        flexDirection: 'row',
+        justifyContent: 'center'
     },
     image: {
-        flex: 0.8,
-        aspectRatio: 1,
-        width: 50,
+        resizeMode: 'center',
     },
 })
 

@@ -8,22 +8,22 @@ class FormButton extends React.Component {
     constructor(props){
         super(props)
 
-        this.onPress = _.debounce(this.onPressInternal, 250);
+        this.onPressDebounce = _.debounce(this.onPress, 250);
     }
 
-    onPressInternal(){
+    onPress(){
         this.props.onPress()
     }
 
     render(){
         return (
             <TouchableOpacity
-                style={style.container}
-                onPress={this.onPress.bind(this)}
+                style={[style.container, this.props.styleButton]}
+                onPress={this.onPressDebounce.bind(this)}
                 activeOpacity={0.7}
             >
 
-                <Text style={style.title}>{ this.props.title }</Text>
+                <Text style={[style.title, this.props.styleText]}>{ this.props.title }</Text>
             </TouchableOpacity>
         )
     }
