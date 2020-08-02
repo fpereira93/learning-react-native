@@ -6,7 +6,6 @@ import SerieCard from '../components/SerieCard';
 import AddSerieCard from '../components/AddSerieCard';
 import { watchSeries } from '../actions/seriesActions';
 import { connect } from 'react-redux';
-import Loading from '../components/Loading';
 
 class SeriesListPage extends React.Component {
 
@@ -31,22 +30,15 @@ class SeriesListPage extends React.Component {
     }
 
     render(){
-
-        if (this.props.series){
-            return (
-                <View style={styles.container}>
-                    <FlatList
-                        data={[...this.props.series, { id: Math.random(), isAddSerie: true }]}
-                        renderItem={({ item }) => this.renderItem(item)}
-                        keyExtractor={item => item.id.toString()}
-                        numColumns={2}
-                    />
-                </View>
-            )
-        }
-
         return (
-            <Loading show noBackdrop />
+            <View style={styles.container}>
+                <FlatList
+                    data={[...this.props.series || [], { id: Math.random(), isAddSerie: true }]}
+                    renderItem={({ item }) => this.renderItem(item)}
+                    keyExtractor={item => item.id.toString()}
+                    numColumns={2}
+                />
+            </View>
         )
     }
 }
