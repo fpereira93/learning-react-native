@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, Dimensions, Image } from 'react-native';
 import _ from 'lodash';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import SerieImage from './SerieImage';
 
 class SerieCard extends React.Component {
 
@@ -15,27 +16,12 @@ class SerieCard extends React.Component {
         this.props.onPress();
     }
 
-    renderImage(uri){
-        if (uri){
-            return (
-                <Image
-                    source={{ uri }}
-                    aspectRatio={1}
-                    resizeMode="cover"
-                    style={{ flex: 1 }}
-                />
-            )
-        }
-
-        return null
-    }
-
     getContainerView(serie){
         return (
             <View style={styles.container}>
                 <View style={styles.card}>
 
-                    { this.renderImage(serie.img) }
+                    <SerieImage {...serie} style={{ flex: 1 }} />
 
                     <View style={styles.cardTitleWrapper}>
                         <Text style={styles.cardTitle}>{serie.title}</Text>

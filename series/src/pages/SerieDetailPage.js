@@ -6,6 +6,7 @@ import colors from '../constants/Colors';
 import { connect } from 'react-redux';
 import { deleteSerie } from '../actions';
 import Loading from '../components/Loading';
+import SerieImage from '../components/SerieImage';
 
 class SerieDetailPage extends React.Component {
 
@@ -30,14 +31,6 @@ class SerieDetailPage extends React.Component {
         }
 
         return 'Não informado';
-    }
-
-    renderImage(uri){
-        if (uri){
-            return <Image style={styles.image} source={{ uri }} />
-        }
-
-        return null
     }
 
     onPressEdit(serie){
@@ -110,7 +103,7 @@ class SerieDetailPage extends React.Component {
 
                 <Loading show={this.state.loading} />
 
-                { this.renderImage(serie.img) }
+                <SerieImage {...serie} style={{ flex: 1 }} />
 
                 <RowData label='Título' value={serie.title} />
 

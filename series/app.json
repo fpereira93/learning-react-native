@@ -30,7 +30,13 @@
     },
     "android": {
         "package": "com.fpereira.series",
-        "versionCode": 1
+        "versionCode": 1,
+        "permissions": [
+            "CAMERA_ROLL",
+            "CAMERA",
+            "READ_EXTERNAL_STORAGE",
+            "READ_INTERNAL_STORAGE"
+        ]
     }
   }
 }
