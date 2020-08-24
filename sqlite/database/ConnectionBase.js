@@ -23,10 +23,10 @@ export const retrieveDatabase = async () => {
         if (__DEV__){
             databaseName = `database_${makeid(15)}.db`;
         } else {
-            databaseName = 'produtos.db';
+            databaseName = 'database.db';
         }
 
-        const uri = Asset.fromModule(require('../assets/produtos.db')).uri
+        const uri = Asset.fromModule(require('../assets/database.db')).uri
         const toDownload = `${FileSystem.documentDirectory}/${databaseName}`
 
         const info = await FileSystem.getInfoAsync(toDownload)
