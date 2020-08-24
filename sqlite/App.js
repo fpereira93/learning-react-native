@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, FlatList, Button } from 'react-native';
-import { downloadDB } from './database/ConnectionBase'
+import { StyleSheet, Text, View, FlatList, Button, Alert } from 'react-native';
+import { retrieveDatabase } from './database/ConnectionBase'
 
 export default function App() {
 
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
-        downloadDB().then((response) => {
-            const db = response.db;
-    
+        retrieveDatabase().then(({ success, db }) => {
+
+            if (!success){
+                Alert.alert('Error on access data base');
+                return;
+            }
+
             db.transaction(tx => {
                 const query = 'select * from product;';
     

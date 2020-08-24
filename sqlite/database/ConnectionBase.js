@@ -2,28 +2,29 @@ import { Asset } from 'expo-asset';
 import * as FileSystem from 'expo-file-system';
 import * as SQLite from 'expo-sqlite';
 
-export const downloadDB = async () => {
+export const retrieveDatabase = async () => {
 
     return await (new Promise(async (resolve, reject) => {
         const uri = Asset.fromModule(require('../assets/produtos.db')).uri
-        const toDownload = `${FileSystem.documentDirectory}/banco_dados.db`
+        const toDownload = `${FileSystem.documentDirectory}/produtos.db`
 
         const info = await FileSystem.getInfoAsync(toDownload)
 
         if (!info.exists){
-            console.log('NAO EXISTE :(');
-
             const result = await FileSystem.downloadAsync(uri, toDownload).then(({ status }) => {
                 return status === 200
             }).catch(error => {
-                console.log('Error o make dir => ', error)
                 return false
             })
 
-            resolve({ db: SQLite.openDatabase('../banco_dados.db') })
+            if (result){
+                resolve({ success: true, db: SQLite.openDatabase('../produtos.db') })
+            } else {
+                resolve({ success: false, db: null})
+            }
         }  else {
-            console.log('EXISTE :)');
-            resolve({ db: SQLite.openDatabase('../banco_dados.db') })
+            resolve({ success: true, db: SQLite.openDatabase('../produtos.db') })
         }
     }))
+
 };
