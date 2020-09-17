@@ -1,0 +1,85 @@
+--
+-- File generated with SQLiteStudio v3.2.1 on ter set 15 20:59:49 2020
+--
+-- Text encoding used: System
+--
+PRAGMA foreign_keys = off;
+BEGIN TRANSACTION;
+
+-- Table: error_movie
+DROP TABLE IF EXISTS error_movie;
+
+CREATE TABLE error_movie (
+    id         INTEGER       PRIMARY KEY AUTOINCREMENT,
+    url_detail VARCHAR (500),
+    error_text TEXT (-1) 
+);
+
+
+-- Table: genres
+DROP TABLE IF EXISTS genres;
+
+CREATE TABLE genres (
+    id          INTEGER       PRIMARY KEY AUTOINCREMENT,
+    id_movie    INTEGER       REFERENCES movie (id) ON DELETE CASCADE,
+    description VARCHAR (500) 
+);
+
+
+-- Table: job_control
+DROP TABLE IF EXISTS job_control;
+
+CREATE TABLE job_control (
+    id         INTEGER       PRIMARY KEY AUTOINCREMENT,
+    url_detail VARCHAR (500),
+    date       DATETIME
+);
+
+
+-- Table: movie
+DROP TABLE IF EXISTS movie;
+
+CREATE TABLE movie (
+    id              INTEGER       PRIMARY KEY AUTOINCREMENT,
+    name            VARCHAR (100),
+    sinopse         TEXT,
+    rating          NUMERIC,
+    url_image       VARCHAR (500),
+    url_detail      VARCHAR (500),
+    group_film      VARCHAR (100),
+    date            VARCHAR (100),
+    country         VARCHAR (100),
+    duration        VARCHAR (100),
+    content_rating  VARCHAR (100),
+    url_film        VARCHAR (500),
+    search_executed BOOLEAN
+);
+
+
+-- Table: season_episode
+DROP TABLE IF EXISTS season_episode;
+
+CREATE TABLE season_episode (
+    id              INTEGER       PRIMARY KEY AUTOINCREMENT,
+    name            VARCHAR (100),
+    id_serie_season INTEGER       REFERENCES serie_season (id) ON DELETE CASCADE
+                                                               MATCH SIMPLE,
+    url_image       VARCHAR (500),
+    url_video       VARCHAR (500),
+    sequence        INTEGER
+);
+
+
+-- Table: serie_season
+DROP TABLE IF EXISTS serie_season;
+
+CREATE TABLE serie_season (
+    id       INTEGER       PRIMARY KEY AUTOINCREMENT,
+    sequence INTEGER,
+    name     VARCHAR (100),
+    id_movie INTEGER       REFERENCES movie (id) ON DELETE CASCADE
+);
+
+
+COMMIT TRANSACTION;
+PRAGMA foreign_keys = on;
