@@ -16,6 +16,6 @@
 * Distribuir seus aplicativos nas lojas oficiais (Google Play e App Store)
 
 ### Bônus &#x1F60B; (get-videos-ts)
-Um dos projetos em especial, usei o **Node** com o nosso querido **TypeScript** para fazer Scraping em uma página de filmes/séries, o aplicativo varre todas as páginas pegando as urls dos filmes/séries e os sava em uma base de dados local, utilizando o banco de dados **SQLite**
+Um dos projetos em especial, usei o **Node** com o nosso querido **TypeScript** para fazer Scraping em uma página de filmes/séries, o aplicativo varre todas as páginas pegando as urls dos filmes/séries e os salva em uma base de dados local, utilizando o banco de dados **SQLite**
 
 # Finished :)
